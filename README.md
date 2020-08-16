@@ -31,7 +31,7 @@ BarAsync
 ```
 
 ## Supported Selectors
-Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selectors-4/).
+Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selectors-4/). The selector also supports Qulaly-specific extensions to the selector.
 
 - SyntaxNode Type: `MethodDeclaration`, `ClassDeclaration` ... 
     - See also [SyntaxKind enum](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.csharp.syntaxkind?view=roslyn-dotnet)
@@ -50,13 +50,19 @@ Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selecto
     - [Negation](https://www.w3.org/TR/selectors-4/#negation): `:not(...)`
     - [Matches-any](https://www.w3.org/TR/selectors-4/#matches): `:is(...)`
     - [Relational](https://www.w3.org/TR/selectors-4/#relational): `:has(...)`
-- Attributes(Property)
+- Attributes (Properties)
     - `[PropName]` (existance)
     - `[PropName = 'Exact']`
     - `[PropName ^= 'StartsWith']`
     - `[PropName $= 'EndsWith']`
     - `[PropName *= 'Contains']`
     - `[PropName ~= 'Item']` (ex. `[Modifiers ~= 'async']`)
+- Qulaly Extensions
+    - `[Name = 'MethodName']`
+        - `Name` is a special property for convenience that can be used in `MethodDeclaration`, `ClassDeclaration` ... etc
+    - `[TypeParameters.Count > 0]`: Conditions
+        - `Parameters.Count`
+        - `TypeParameters.Count`
 
 ## License
 MIT License
