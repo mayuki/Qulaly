@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -185,6 +185,126 @@ namespace Qulaly.Matcher.Selectors
         public override string ToSelectorString()
         {
             return $"[{PropertyName}~='{Value}']";
+        }
+    }
+
+    public class PropertyEqualMatchSelector : PropertySelector
+    {
+        public int Value { get; }
+
+        public PropertyEqualMatchSelector(string propertyName, int value)
+            : base(propertyName)
+        {
+            Value = value;
+        }
+
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) =>
+            {
+                return int.TryParse(GetPropertyValue(ctx), out var value) && value == Value;
+            };
+        }
+
+        public override string ToSelectorString()
+        {
+            return $"[{PropertyName}={Value}]";
+        }
+    }
+
+    public class PropertyLessThanMatchSelector : PropertySelector
+    {
+        public int Value { get; }
+
+        public PropertyLessThanMatchSelector(string propertyName, int value)
+            : base(propertyName)
+        {
+            Value = value;
+        }
+
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) =>
+            {
+                return int.TryParse(GetPropertyValue(ctx), out var value) && value < Value;
+            };
+        }
+
+        public override string ToSelectorString()
+        {
+            return $"[{PropertyName}<{Value}]";
+        }
+    }
+
+    public class PropertyLessThanEqualMatchSelector : PropertySelector
+    {
+        public int Value { get; }
+
+        public PropertyLessThanEqualMatchSelector(string propertyName, int value)
+            : base(propertyName)
+        {
+            Value = value;
+        }
+
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) =>
+            {
+                return int.TryParse(GetPropertyValue(ctx), out var value) && value <= Value;
+            };
+        }
+
+        public override string ToSelectorString()
+        {
+            return $"[{PropertyName}<={Value}]";
+        }
+    }
+
+    public class PropertyGreaterThanMatchSelector : PropertySelector
+    {
+        public int Value { get; }
+
+        public PropertyGreaterThanMatchSelector(string propertyName, int value)
+            : base(propertyName)
+        {
+            Value = value;
+        }
+
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) =>
+            {
+                return int.TryParse(GetPropertyValue(ctx), out var value) && value > Value;
+            };
+        }
+
+        public override string ToSelectorString()
+        {
+            return $"[{PropertyName}>{Value}]";
+        }
+    }
+
+    public class PropertyGreaterThanEqualMatchSelector : PropertySelector
+    {
+        public int Value { get; }
+
+        public PropertyGreaterThanEqualMatchSelector(string propertyName, int value)
+            : base(propertyName)
+        {
+            Value = value;
+        }
+
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) =>
+            {
+                return int.TryParse(GetPropertyValue(ctx), out var value) && value > Value;
+            };
+        }
+
+        public override string ToSelectorString()
+        {
+            return $"[{PropertyName}>={Value}]";
         }
     }
 }

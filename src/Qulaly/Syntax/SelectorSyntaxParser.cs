@@ -43,6 +43,7 @@ namespace Qulaly.Syntax
                 ProductionKind.HasPseudoClassSelector => VisitHasPseudoClassSelector(production),
                 ProductionKind.NotPseudoClassSelector => VisitNotPseudoClassSelector(production),
                 ProductionKind.AttributeSelector => VisitAttributeSelector(production),
+                ProductionKind.AttributeSelectorQulalyExtensionNumber => VisitAttributeQulalyExtensionNumberSelector(production),
                 ProductionKind.Combinator => VisitCombinator(production),
                 ProductionKind.TypeSelector => VisitTypeSelector(production),
                 _ => throw new QulalyParseException($"Unknown Kind: {production.Kind}"),
@@ -149,5 +150,34 @@ namespace Qulaly.Syntax
                 return new PropertyNameSelector(name);
             }
         }
+
+        private SelectorElement VisitAttributeQulalyExtensionNumberSelector(Production production)
+        {
+            var name = production.Children[0].Captures[0]; // wq-name
+            if (production.Captures.Any())
+            {
+                var matcher = production.Captures[0];
+
+                if (!int.TryParse(production.Captures[1], out var value))
+                {
+                    throw new QulalyParseException($"Invalid Number: {value}");
+                }
+
+                return matcher switch
+                {
+                    "=" => new PropertyEqualMatchSelector(name, value),
+                    "<" => new PropertyLessThanMatchSelector(name, value),
+                    "<=" => new PropertyLessThanEqualMatchSelector(name, value),
+                    ">" => new PropertyGreaterThanMatchSelector(name, value),
+                    ">=" => new PropertyGreaterThanEqualMatchSelector(name, value),
+                    _ => throw new QulalyParseException($"Unknown Matcher: {matcher}")
+                };
+            }
+            else
+            {
+                return new PropertyNameSelector(name);
+            }
+        }
+
     }
 }

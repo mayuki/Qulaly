@@ -71,7 +71,7 @@ namespace Qulaly.Syntax
             // https://www.w3.org/TR/selectors-4/#typedef-subclass-selector
             return Production(ProductionKind.SubclassSelector, () =>
             {
-                return Expect(IdSelector, ClassSelector, AttributeSelector, PseudoClassSelector);
+                return Expect(IdSelector, ClassSelector, AttributeSelectorQulalyExtensionNumber, AttributeSelector, PseudoClassSelector);
             });
         }
 
@@ -230,17 +230,38 @@ namespace Qulaly.Syntax
             {
                 return Expect(() => Expect(Char('[')) && ExpectZeroOrMore(Space) && Expect(WqName) && ExpectZeroOrMore(Space) && Expect(Char(']')),
                     () => Expect(Char('['))
-                            && ExpectZeroOrMore(Space)
-                            && Expect(WqName)
-                            && ExpectZeroOrMore(Space)
-                            && Expect(() =>
-                                   Capture(AttrMatcher)()
-                                   && ExpectZeroOrMore(Space)
-                                   && Expect(Capture(() => Expect(IdentToken, String)))
-                                   && ExpectZeroOrMore(() => ExpectZeroOrMore(Space) && Expect(Capture(() => Expect(Char('i'))))) // attr-modifier
-                                   && ExpectZeroOrMore(Space)
-                            )
-                            && Expect(Char(']')));
+                          && ExpectZeroOrMore(Space)
+                          && Expect(WqName)
+                          && ExpectZeroOrMore(Space)
+                          && Expect(() =>
+                              Capture(AttrMatcher)()
+                              && ExpectZeroOrMore(Space)
+                              && Expect(Capture(() => Expect(IdentToken, String)))
+                              && ExpectZeroOrMore(() => ExpectZeroOrMore(Space) && Expect(Capture(() => Expect(Char('i'))))) // attr-modifier
+                              && ExpectZeroOrMore(Space)
+                          )
+                          && Expect(Char(']'))
+                );
+            });
+        }
+
+        public bool AttributeSelectorQulalyExtensionNumber()
+        {
+            return Production(ProductionKind.AttributeSelectorQulalyExtensionNumber, () =>
+            {
+                // Qulaly Extensions: [Name > 1]
+                return Expect(() => Expect(Char('['))
+                          && ExpectZeroOrMore(Space)
+                          && Expect(WqName)
+                          && ExpectZeroOrMore(Space)
+                          && Expect(() =>
+                              Capture(AttrMatcherQulalyExtension)()
+                              && ExpectZeroOrMore(Space)
+                              && Expect(Capture(() => Expect(Number)))
+                              && ExpectZeroOrMore(Space)
+                          )
+                          && Expect(Char(']'))
+                );
             });
         }
 
@@ -248,6 +269,11 @@ namespace Qulaly.Syntax
         {
             // <attr-matcher> = [ '~' | '|' | '^' | '$' | '*' ]? '='
             return Expect(() => ExpectZeroOrOne(() => Expect(Char('~'), Char('|'), Char('^'), Char('$'), Char('*'))) && Expect(Char('=')));
+        }
+        public bool AttrMatcherQulalyExtension()
+        {
+            // Qulaly Extension = ['<' | '<=' | '>' | '>=' ]
+            return Expect(Chars("<="), Chars(">="), Chars("<"), Chars(">"), Chars("="));
         }
 
         public bool WqName()

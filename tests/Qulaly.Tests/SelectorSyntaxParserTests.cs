@@ -74,6 +74,46 @@ namespace Qulaly.Tests
         }
 
         [Fact]
+        public void Property_Eq()
+        {
+            var selector = new SelectorSyntaxParser().Parse("[Name = 123]");
+            selector.Should().BeOfType<ComplexSelectorList>();
+            selector.ToSelectorString().Should().Be(new ComplexSelectorList(new ComplexSelector(new PropertyEqualMatchSelector("Name", 123))).ToSelectorString());
+        }
+
+        [Fact]
+        public void Property_Lt()
+        {
+            var selector = new SelectorSyntaxParser().Parse("[Name < 123]");
+            selector.Should().BeOfType<ComplexSelectorList>();
+            selector.ToSelectorString().Should().Be(new ComplexSelectorList(new ComplexSelector(new PropertyLessThanMatchSelector("Name", 123))).ToSelectorString());
+        }
+
+        [Fact]
+        public void Property_LtEq()
+        {
+            var selector = new SelectorSyntaxParser().Parse("[Name <= 123]");
+            selector.Should().BeOfType<ComplexSelectorList>();
+            selector.ToSelectorString().Should().Be(new ComplexSelectorList(new ComplexSelector(new PropertyLessThanEqualMatchSelector("Name", 123))).ToSelectorString());
+        }
+
+        [Fact]
+        public void Property_Gt()
+        {
+            var selector = new SelectorSyntaxParser().Parse("[Name > 123]");
+            selector.Should().BeOfType<ComplexSelectorList>();
+            selector.ToSelectorString().Should().Be(new ComplexSelectorList(new ComplexSelector(new PropertyGreaterThanMatchSelector("Name", 123))).ToSelectorString());
+        }
+
+        [Fact]
+        public void Property_GtEq()
+        {
+            var selector = new SelectorSyntaxParser().Parse("[Name >= 123]");
+            selector.Should().BeOfType<ComplexSelectorList>();
+            selector.ToSelectorString().Should().Be(new ComplexSelectorList(new ComplexSelector(new PropertyGreaterThanEqualMatchSelector("Name", 123))).ToSelectorString());
+        }
+
+        [Fact]
         public void Property_NameOnly()
         {
             var selector = new SelectorSyntaxParser().Parse("[Name]");

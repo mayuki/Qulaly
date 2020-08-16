@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Qulaly.Syntax
@@ -45,5 +45,6 @@ namespace Qulaly.Syntax
         NsPrefix,
         ClassSelector,
         AttributeSelector,
+        AttributeSelectorQulalyExtensionNumber,
     }
 }
