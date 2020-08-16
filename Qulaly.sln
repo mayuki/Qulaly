@@ -8,7 +8,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{46B6CBA3-58E8-49F6-A6CB-89380140F920}"
 	ProjectSection(SolutionItems) = preProject
 		src\.editorconfig = src\.editorconfig
-		.github\workflows\build.yaml = .github\workflows\build.yaml
 		Directory.Build.props = Directory.Build.props
 		README.md = README.md
 	EndProjectSection
@@ -16,6 +15,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{D5DDDC85-0EA8-4704-8BA2-A0313BFB0000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Qulaly.Tests", "tests\Qulaly.Tests\Qulaly.Tests.csproj", "{71BDFF46-85E9-432D-AA28-4DC04718E352}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Actions", "GitHub Actions", "{A388CC90-D3CD-4F16-891E-78BDC87980FD}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yaml = .github\workflows\build.yaml
+		.github\workflows\release.yml = .github\workflows\release.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +42,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{71BDFF46-85E9-432D-AA28-4DC04718E352} = {D5DDDC85-0EA8-4704-8BA2-A0313BFB0000}
+		{A388CC90-D3CD-4F16-891E-78BDC87980FD} = {46B6CBA3-58E8-49F6-A6CB-89380140F920}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CF76B7C6-BB23-41DD-AF46-0099957A64C8}
