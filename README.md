@@ -24,6 +24,7 @@ public class Class1
 }
 ");
 
+// Enumerate SyntaxNodes by calling `QuerySelectorAll` extension method for SyntaxNode/SyntaxTree.
 foreach (var methodNode in syntaxTree.QuerySelectorAll(":method[Modifiers ~= 'async']"))
 {
     Console.WriteLine(((MethodDeclarationSyntax)methodNode).Identifier.ToFullString());
@@ -34,6 +35,10 @@ foreach (var methodNode in syntaxTree.QuerySelectorAll(":method[Modifiers ~= 'as
 FooAsync
 BarAsync
 ```
+
+## Methods
+- `QuerySelectorAll`
+- `QuerySelector`
 
 ## Install
 Install NuGet package from NuGet.org
