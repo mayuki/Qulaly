@@ -252,7 +252,7 @@ namespace Qulaly.Syntax
                 // Qulaly Extensions: [Name > 1]
                 return Expect(() => Expect(Char('['))
                           && ExpectZeroOrMore(Space)
-                          && Expect(WqName)
+                          && Expect(PropertyNameChainQulalyExtension)
                           && ExpectZeroOrMore(Space)
                           && Expect(() =>
                               Capture(AttrMatcherQulalyExtension)()
@@ -281,6 +281,15 @@ namespace Qulaly.Syntax
             return Production(ProductionKind.WqName, () =>
             {
                 return ExpectZeroOrOne(NsPrefix) && Expect(Capture(IdentToken));
+            });
+        }
+
+        public bool PropertyNameChainQulalyExtension()
+        {
+            return Production(ProductionKind.PropertyNameChainQulalyExtension, () =>
+            {
+                // <ident-token> [ '.' <ident-token> ]*
+                return Expect(Capture(() => Expect(IdentToken) && ExpectZeroOrMore(() => Expect(Char('.')) && Expect(IdentToken))));
             });
         }
 

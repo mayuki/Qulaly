@@ -23,6 +23,7 @@ namespace Qulaly.Syntax
     {
         Root,
         WqName,
+        PropertyNameChainQulalyExtension,
         ComplexSelectorList,
         ComplexSelector,
         Combinator,

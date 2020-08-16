@@ -166,5 +166,96 @@ namespace ConsoleApp22
             matches.OfType<ClassDeclarationSyntax>().Select(x => x.Identifier.ToString()).Should().ContainInOrder("Program", "Class1");
         }
 
+        [Fact]
+        public void PropertyCount()
+        {
+            var selector = QulalySelector.Parse(":method:has(ParameterList[Count > 1])"); // the method has two or more parameters.
+            var syntaxTree = CSharpSyntaxTree.ParseText(@"
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ConsoleApp22
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+
+        public static async ValueTask<T> Test<T>(int a, string b, T c)
+        {
+        }
+
+        object Bar(int key)
+        {
+        }
+
+        object Foo(int key)
+        {
+        }
+    }
+    public class Class1
+    {
+        object MethodA(int arg1) => throw new NotImplementedException();
+        object MethodB(int arg1, string arg2) => throw new NotImplementedException();
+    }
+}
+");
+
+            var compilation = CSharpCompilation.Create("Test")
+                .AddSyntaxTrees(syntaxTree);
+
+            var root = syntaxTree.GetCompilationUnitRoot();
+            var matches = root.QuerySelectorAll(selector, compilation).ToArray();
+            matches.Should().HaveCount(2);
+            matches.OfType<MethodDeclarationSyntax>().Select(x => x.Identifier.ToString()).Should().ContainInOrder("Test", "MethodB");
+        }
+
+        [Fact]
+        public void PropertyCount_TypeParameter_Count()
+        {
+            var selector = QulalySelector.Parse(":method[TypeParameters.Count > 0]"); // the method has one or more type-parameters.
+            var syntaxTree = CSharpSyntaxTree.ParseText(@"
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ConsoleApp22
+{
+    public class Program
+    {
+        static void Main(string[] args)
+        {
+        }
+
+        public static async ValueTask<T> Test<T>(int a, string b, T c)
+        {
+        }
+
+        object Bar(int key)
+        {
+        }
+
+        object Foo(int key)
+        {
+        }
+    }
+    public class Class1
+    {
+        object MethodA(int arg1) => throw new NotImplementedException();
+        object MethodB(int arg1, string arg2) => throw new NotImplementedException();
+    }
+}
+");
+
+            var compilation = CSharpCompilation.Create("Test")
+                .AddSyntaxTrees(syntaxTree);
+
+            var root = syntaxTree.GetCompilationUnitRoot();
+            var matches = root.QuerySelectorAll(selector, compilation).ToArray();
+            matches.Should().HaveCount(1);
+            matches.OfType<MethodDeclarationSyntax>().Select(x => x.Identifier.ToString()).Should().ContainInOrder("Test");
+        }
     }
 }
