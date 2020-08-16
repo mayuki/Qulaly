@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace Qulaly.Syntax
 {
     public class ProductionScope : IDisposable
     {
-        private Stack<List<Production>> _stackProduction;
-        private Stack<List<string>> _stackCaptures;
+        private readonly Stack<List<Production>> _stackProduction;
+        private readonly Stack<List<string>> _stackCaptures;
         private bool _committed;
 
         public ProductionScope()

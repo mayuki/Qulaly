@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Qulaly.Syntax
@@ -55,13 +55,7 @@ namespace Qulaly.Syntax
                 if (result)
                 {
                     var capturedString = _selector.Substring(origIndex, Index - origIndex);
-                    if (CurrentProduction == null)
-                    {
-                        throw new InvalidOperationException();
-                    }
-
                     _productionScope.AddCapture(capturedString);
-                    //CurrentProduction.Captures.Add(capturedString);
                 }
                 return result;
             };
@@ -126,6 +120,7 @@ namespace Qulaly.Syntax
                             : (c.Any(x => x == nextChar));
             };
         }
+
         public Func<bool> CharRange(char start, char end, bool isNegative = false)
         {
             return () =>
@@ -141,27 +136,19 @@ namespace Qulaly.Syntax
             };
         }
 
-        public bool Nmstart()
-        {
-            // nmstart   [_a-z]|{nonascii}|{escape}
-            return Expect(Char('_'), CharRange('a', 'z'), NonAscii, Escape);
-        }
-        public bool Nmchar()
-        {
-            // nmchar    [_a-z0-9-]|{nonascii}|{escape}
-            return Expect(Char('_'), CharRange('a', 'z'), Char('-'), Num, NonAscii, Escape);
-        }
         public bool Num()
         {
             // num       [0-9]+|[0-9]*\.[0-9]+
             // TODO:
             return ExpectOneOrMore(CharRange('0', '9'));
         }
+
         public bool NonAscii()
         {
             // nonascii  [^\0-\177]
             return CharRange('\0', '\xB1', true)();
         }
+
         public bool Unicode()
         {
             // unicode   \\[0-9a-f]{1,6}(\r\n|[ \n\r\t\f])?
@@ -212,24 +199,6 @@ namespace Qulaly.Syntax
             return W() && Expect(Char('+'));
         }
 
-        public bool Greater()
-        {
-            // {w}">"           return GREATER;
-            return W() && Expect(Char('>'));
-        }
-
-        public bool Tilde()
-        {
-            // {w}"~"           return TILDE;
-            return W() && Expect(Char('~'));
-        }
-
-        public bool Comma()
-        {
-            // {w}","           return COMMA;
-            return W() && Expect(Char(','));
-        }
-
         public bool MultiComma(Func<bool> next)
         {
             // https://www.w3.org/TR/css-values-4/#mult-comma
@@ -243,12 +212,6 @@ namespace Qulaly.Syntax
             // https://www.w3.org/TR/css-syntax-3/#hash-token-diagram
             return Expect(Char('#'))
                 && Expect(CharRange('a', 'z'), CharRange('A', 'Z'), CharRange('0', '9'), Char('_'), Char('-'), NonAscii, Escape);
-        }
-
-        public bool Name()
-        {
-            // name      {nmchar}+
-            return ExpectOneOrMore(Nmchar);
         }
 
         public bool Dimension()
@@ -365,38 +328,6 @@ namespace Qulaly.Syntax
                                   && Expect(Chars("58"), Chars("78"))
                                   && ExpectZeroOrOne(() => Expect(Char(' '), Char('\r'), Char('\n'), Char('\r'), Char('\f'))),
                           (Chars("\\v")), Chars("\\V"));
-        }
-
-        public bool Not()
-        {
-            // ":"{N}{O}{T}"("  return NOT;
-            return Expect(Char(':')) && Expect(N) && Expect(O) && Expect(T) && Expect(Char('('));
-        }
-
-        public bool PrefixMatch()
-        {
-            // "^="             return PREFIXMATCH;
-            return Expect(Chars("^="));
-        }
-        public bool SuffixMatch()
-        {
-            // "$="             return SUFFIXMATCH;
-            return Expect(Chars("$="));
-        }
-        public bool SubstringMatch()
-        {
-            // "*="             return SUBSTRINGMATCH;
-            return Expect(Chars("*="));
-        }
-        public bool Includes()
-        {
-            // "~="             return INCLUDES;
-            return Expect(Chars("~="));
-        }
-        public bool DashMatch()
-        {
-            // "|="             return DASHMATCH;
-            return Expect(Chars("|="));
         }
     }
 }

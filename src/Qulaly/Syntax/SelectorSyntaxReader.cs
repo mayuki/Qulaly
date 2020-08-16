@@ -1,9 +1,7 @@
-﻿namespace Qulaly.Syntax
+namespace Qulaly.Syntax
 {
     public partial class SelectorSyntaxReader
     {
-        private readonly ProductionScope _scope = new ProductionScope();
-
         public Production? GetRoot()
         {
             if (Production(ProductionKind.Root, () => ExpectZeroOrMore(Space) && Expect(ComplexSelector) && ExpectZeroOrMore(Space)))
@@ -236,7 +234,7 @@
                             && Expect(WqName)
                             && ExpectZeroOrMore(Space)
                             && Expect(() =>
-                                   Capture(() => Expect(PrefixMatch, SuffixMatch, SubstringMatch, Char('='), Includes, DashMatch))()
+                                   Capture(AttrMatcher)()
                                    && ExpectZeroOrMore(Space)
                                    && Expect(Capture(() => Expect(IdentToken, String)))
                                    && ExpectZeroOrMore(() => ExpectZeroOrMore(Space) && Expect(Capture(() => Expect(Char('i'))))) // attr-modifier
@@ -244,6 +242,12 @@
                             )
                             && Expect(Char(']')));
             });
+        }
+
+        public bool AttrMatcher()
+        {
+            // <attr-matcher> = [ '~' | '|' | '^' | '$' | '*' ]? '='
+            return Expect(() => Expect(Char('~'), Char('|'), Char('^'), Char('$'), Char('*')) && Expect(Char('=')));
         }
 
         public bool WqName()
