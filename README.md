@@ -26,7 +26,7 @@ public class Class1
 
 foreach (var methodNode in syntaxTree.QuerySelectorAll(":method[Modifiers ~= 'async']"))
 {
-    Console.WriteLine(((MethodDeclaration)methodNode).Identifier.ToFullString());
+    Console.WriteLine(((MethodDeclarationSyntax)methodNode).Identifier.ToFullString());
 }
 ```
 ### Output
@@ -76,7 +76,7 @@ Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selecto
     - `[PropName *= 'Contains']`
     - `[PropName ~= 'Item']` (ex. `[Modifiers ~= 'async']`)
 - Qulaly Extensions
-    - `[Name = 'MethodName']`
+    - `[Name = 'MethodName']`: Name special property
         - `Name` is a special property for convenience that can be used in `MethodDeclaration`, `ClassDeclaration` ... etc
     - `[TypeParameters.Count > 0]`: Conditions
         - `Parameters.Count`
