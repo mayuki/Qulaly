@@ -1,6 +1,9 @@
 # Qulaly
 **Qu**ery **la**nguage for Ros**ly**n. Qulaly is a library that queries Roslyn's C# syntax tree with CSS selector-like syntax. Inspired by [esquery](https://github.com/estools/esquery) in ECMAScript ecosystem.
 
+[![NuGet version](https://badge.fury.io/nu/Qulaly.svg)](https://www.nuget.org/packages/Qulaly)
+[![Build-Development](https://github.com/mayuki/Qulaly/workflows/Build-Development/badge.svg)](https://github.com/mayuki/Qulaly/actions?query=workflow%3ABuild-Development)
+
 ## Example
 The following code shows how to query the `async` method.
 
