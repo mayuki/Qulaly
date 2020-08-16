@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{46B6CBA3-58E8-49F6-A6CB-89380140F920}"
 	ProjectSection(SolutionItems) = preProject
 		src\.editorconfig = src\.editorconfig
+		.github\workflows\build.yaml = .github\workflows\build.yaml
 		Directory.Build.props = Directory.Build.props
 	EndProjectSection
 EndProject
