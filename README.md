@@ -44,7 +44,7 @@ PS> Install-Package Qulaly
 ```
 
 ## Supported Selectors
-Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selectors-4/). The selector also supports Qulaly-specific extensions to the selector.
+Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selectors-4/). The selector engine also supports Qulaly-specific extensions to the selector.
 
 - SyntaxNode Type: `MethodDeclaration`, `ClassDeclaration` ... 
     - See also [SyntaxKind enum](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.csharp.syntaxkind?view=roslyn-dotnet)
