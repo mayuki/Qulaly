@@ -63,6 +63,8 @@ Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selecto
     - [Negation](https://www.w3.org/TR/selectors-4/#negation): `:not(...)`
     - [Matches-any](https://www.w3.org/TR/selectors-4/#matches): `:is(...)`
     - [Relational](https://www.w3.org/TR/selectors-4/#relational): `:has(...)`
+    - [`:first-child`](https://www.w3.org/TR/selectors-4/#the-first-child-pseudo)
+    - [`:last-child`](https://www.w3.org/TR/selectors-4/#the-last-child-pseudo)
 - Attributes (Properties)
     - `[PropName]` (existance)
     - `[PropName = 'Exact']`

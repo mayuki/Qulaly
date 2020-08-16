@@ -114,6 +114,8 @@ namespace Qulaly.Syntax
                     "method" => new MethodPseudoClassSelector(),
                     "interface" => new InterfacePseudoClassSelector(),
                     "lambda" => new LambdaPseudoClassSelector(),
+                    "first-child" => new FirstChildPseudoClassSelector(),
+                    "last-child" => new LastChildPseudoClassSelector(),
                     _ => throw new QulalyParseException($"Unknown Pseudo-class: {pseudoName}"),
                 };
             }

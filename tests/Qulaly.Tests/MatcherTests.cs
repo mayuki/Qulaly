@@ -257,5 +257,66 @@ namespace ConsoleApp22
             matches.Should().HaveCount(1);
             matches.OfType<MethodDeclarationSyntax>().Select(x => x.Identifier.ToString()).Should().ContainInOrder("Test");
         }
+
+        [Fact]
+        public void PseudoClass_FirstChild()
+        {
+            var syntaxTree = CSharpSyntaxTree.ParseText(@"
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ConsoleApp22
+{
+    public class Program
+    {
+        static void Main(string[] args) => throw new NotImplementedException();
+        public static async ValueTask<T> Test<T>(int a, string b, T c) => throw new NotImplementedException();
+        object Bar(int key) => throw new NotImplementedException();
+        object Foo(int key) => throw new NotImplementedException();
+    }
+    public class Class1
+    {
+        object MethodA(int arg1) => throw new NotImplementedException();
+        object MethodB(int arg1, string arg2) => throw new NotImplementedException();
+    }
+}
+");
+
+            var firsts = syntaxTree.QuerySelectorAll(":method:first-child").ToArray();
+            firsts.Should().HaveCount(2);
+            firsts.OfType<MethodDeclarationSyntax>().Select(x => x.Identifier.ToFullString()).Should().ContainInOrder("Main", "MethodA");
+        }
+
+        [Fact]
+        public void PseudoClass_LastChild()
+        {
+            var syntaxTree = CSharpSyntaxTree.ParseText(@"
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+namespace ConsoleApp22
+{
+    public class Program
+    {
+        static void Main(string[] args) => throw new NotImplementedException();
+        public static async ValueTask<T> Test<T>(int a, string b, T c) => throw new NotImplementedException();
+        object Bar(int key) => throw new NotImplementedException();
+        object Foo(int key) => throw new NotImplementedException();
+    }
+    public class Class1
+    {
+        object MethodA(int arg1) => throw new NotImplementedException();
+        object MethodB(int arg1, string arg2) => throw new NotImplementedException();
+    }
+}
+");
+
+            var lasts = syntaxTree.QuerySelectorAll(":method:last-child").ToArray();
+            lasts.Should().HaveCount(2);
+            lasts.OfType<MethodDeclarationSyntax>().Select(x => x.Identifier.ToFullString()).Should().ContainInOrder("Foo", "MethodB");
+        }
+
     }
 }

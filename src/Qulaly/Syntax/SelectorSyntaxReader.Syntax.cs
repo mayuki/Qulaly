@@ -178,7 +178,7 @@ namespace Qulaly.Syntax
         {
             // https://www.w3.org/TR/css-syntax-3/#ident-token-diagram
             return Expect(Chars("--"), () => ExpectZeroOrOne(Char('-')) && Expect(Char('_'), CharRange('a', 'z'), NonAscii, Escape))
-                && ExpectZeroOrMore(() => Expect(Char('_'), CharRange('a', 'z'), CharRange('A', 'Z'), CharRange('0', '9'), NonAscii, Escape));
+                && ExpectZeroOrMore(() => Expect(Char('_'), Char('-'), CharRange('a', 'z'), CharRange('A', 'Z'), CharRange('0', '9'), NonAscii, Escape));
         }
 
         public bool Space()

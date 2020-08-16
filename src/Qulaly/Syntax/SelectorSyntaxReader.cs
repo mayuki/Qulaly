@@ -97,6 +97,7 @@ namespace Qulaly.Syntax
                     () => Expect(Char(':')) && Expect(IsPseudoClassSelector),
                     () => Expect(Char(':')) && Expect(HasPseudoClassSelector),
                     () => Expect(Char(':')) && Expect(NotPseudoClassSelector),
+                    () => Expect(Char(':')) && Expect(NotPseudoClassSelector),
                     () => Expect(Char(':')) && Expect(FunctionToken) && Expect(Expression) && Expect(Char(')')),
                     () => Expect(Char(':')) && Expect(Capture(IdentToken))
                 );

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -176,6 +176,32 @@ namespace Qulaly.Matcher.Selectors
         public override string ToSelectorString()
         {
             return ":interface";
+        }
+    }
+
+    public class FirstChildPseudoClassSelector : PseudoClassSelector
+    {
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) => ctx.Node == ctx.Node.Parent.ChildNodes().First();
+        }
+
+        public override string ToSelectorString()
+        {
+            return ":first-child";
+        }
+    }
+
+    public class LastChildPseudoClassSelector : PseudoClassSelector
+    {
+        public override SelectorMatcher GetMatcher()
+        {
+            return (in SelectorMatcherContext ctx) => ctx.Node == ctx.Node.Parent.ChildNodes().Last();
+        }
+
+        public override string ToSelectorString()
+        {
+            return ":last-child";
         }
     }
 }
