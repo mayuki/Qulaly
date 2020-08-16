@@ -10,7 +10,7 @@
     <Copyright>Copyright 2020-present Mayuki Sawatari</Copyright>
     <PackageProjectUrl>https://github.com/mayuki/Qulaly</PackageProjectUrl>
     <RepositoryUrl>https://github.com/mayuki/Qulaly</RepositoryUrl>
-    <PackageIcon>icon.png</PackageIcon>
+    <!--<PackageIcon>icon.png</PackageIcon>-->
     <PackageTags>Roslyn Qulaly</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
 
