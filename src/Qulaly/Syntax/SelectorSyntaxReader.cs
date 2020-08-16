@@ -4,7 +4,7 @@ namespace Qulaly.Syntax
     {
         public Production? GetRoot()
         {
-            if (Production(ProductionKind.Root, () => ExpectZeroOrMore(Space) && Expect(ComplexSelector) && ExpectZeroOrMore(Space)))
+            if (Production(ProductionKind.Root, () => ExpectZeroOrMore(Space) && Expect(ComplexSelectorList) && ExpectZeroOrMore(Space)))
             {
                 return _productionScope.GetProductions()[0];
             }

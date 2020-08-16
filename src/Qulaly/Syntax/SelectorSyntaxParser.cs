@@ -34,6 +34,7 @@ namespace Qulaly.Syntax
             return production.Kind switch
             {
                 ProductionKind.Root => Visit(production.Children[0]),
+                ProductionKind.ComplexSelectorList => new ComplexSelectorList(production.Children.Select(x => Visit(x)).Cast<Selector>().ToArray()),
                 ProductionKind.CompoundSelector => new CompoundSelector(production.Children.Select(x => Visit(x)).Cast<Selector>().ToArray()),
                 ProductionKind.ComplexSelector => new ComplexSelector(production.Children.Select(x => Visit(x)).ToArray()),
                 ProductionKind.SubclassSelector => Visit(production.Children[0]),
@@ -71,7 +72,15 @@ namespace Qulaly.Syntax
                 // wq-name
                 var wqName = production.Children[0];
                 var name = wqName.Captures[0];
-                return new TypeSelector((SyntaxKind)Enum.Parse(typeof(SyntaxKind), name));
+
+                if (Enum.TryParse<SyntaxKind>(name, out var value))
+                {
+                    return new TypeSelector(value);
+                }
+                else
+                {
+                    throw new QulalyParseException($"Invalid SyntaxKind Type: {value}");
+                }
             }
             else
             {
