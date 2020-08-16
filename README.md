@@ -1,2 +1,65 @@
 # Qulaly
-Query language for Roslyn
+**Qu**ery **la**nguage for Ros**ly**n. Qulaly is a library that queries Roslyn's C# syntax tree with CSS selector-like syntax. Inspired by [esquery](https://github.com/estools/esquery) in ECMAScript ecosystem.
+
+## Example
+The following code shows how to query the `async` method.
+
+```csharp
+var syntaxTree = CSharpSyntaxTree.ParseText(@"
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
+public class Class1
+{
+    public static async ValueTask<T> FooAsync<T>(int a, string b, T c) => throw new NotImplementedException();
+    public async Task BarAsync<T>() => throw new NotImplementedException();
+    public object MethodA(int arg1) => throw new NotImplementedException();
+    public object MethodB(int arg1, string arg2) => throw new NotImplementedException();
+}
+");
+
+foreach (var methodNode in syntaxTree.QuerySelectorAll(":method[Modifiers ~= 'async']"))
+{
+    Console.WriteLine(((MethodDeclaration)methodNode).Identifier.ToFullString());
+}
+```
+### Output
+```
+FooAsync
+BarAsync
+```
+
+## Supported Selectors
+Qulaly supports a subset of [CSS selector level 4](https://www.w3.org/TR/selectors-4/).
+
+- SyntaxNode Type: `MethodDeclaration`, `ClassDeclaration` ... 
+    - See also [SyntaxKind enum](https://docs.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.csharp.syntaxkind?view=roslyn-dotnet)
+- SyntaxNode Univarsal: `*`
+- SyntaxNode pseudo-classes (for short-hand)
+    - `:method`
+    - `:class`
+    - `:interface`
+    - `:lambda`
+- Combinators
+    - [Descendant](https://www.w3.org/TR/selectors-4/#descendant-combinators): `node descendant`
+    - [Child](https://www.w3.org/TR/selectors-4/#child-combinators): `node > child`
+    - [Next-sibling](https://www.w3.org/TR/selectors-4/#adjacent-sibling-combinators): `node + next`
+    - [Subsequent-sibling](https://www.w3.org/TR/selectors-4/#general-sibling-combinators): `node ~ sibling`
+- Pseudo-class
+    - [Negation](https://www.w3.org/TR/selectors-4/#negation): `:not(...)`
+    - [Matches-any](https://www.w3.org/TR/selectors-4/#matches): `:is(...)`
+    - [Relational](https://www.w3.org/TR/selectors-4/#relational): `:has(...)`
+- Attributes(Property)
+    - `[PropName]` (existance)
+    - `[PropName = 'Exact']`
+    - `[PropName ^= 'StartsWith']`
+    - `[PropName $= 'EndsWith']`
+    - `[PropName *= 'Contains']`
+    - `[PropName ~= 'Item']` (ex. `[Modifiers ~= 'async']`)
+
+## License
+MIT License
+```
+Copyright © 2020-present Mayuki Sawatari <mayuki@misuzilla.org>
+```
