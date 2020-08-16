@@ -5,6 +5,8 @@
 The following code shows how to query the `async` method.
 
 ```csharp
+using Qulaly;
+
 var syntaxTree = CSharpSyntaxTree.ParseText(@"
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,17 @@ foreach (var methodNode in syntaxTree.QuerySelectorAll(":method[Modifiers ~= 'as
 ```
 FooAsync
 BarAsync
+```
+
+## Install
+Install NuGet package from NuGet.org
+
+```bash
+$ dotnet add package Qulaly
+```
+
+```powershell
+PS> Install-Package Qulaly
 ```
 
 ## Supported Selectors
