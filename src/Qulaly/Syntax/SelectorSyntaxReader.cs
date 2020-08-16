@@ -247,7 +247,7 @@ namespace Qulaly.Syntax
         public bool AttrMatcher()
         {
             // <attr-matcher> = [ '~' | '|' | '^' | '$' | '*' ]? '='
-            return Expect(() => Expect(Char('~'), Char('|'), Char('^'), Char('$'), Char('*')) && Expect(Char('=')));
+            return Expect(() => ExpectZeroOrOne(() => Expect(Char('~'), Char('|'), Char('^'), Char('$'), Char('*'))) && Expect(Char('=')));
         }
 
         public bool WqName()
