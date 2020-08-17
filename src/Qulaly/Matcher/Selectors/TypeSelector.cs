@@ -1,4 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.CSharp;
 
 namespace Qulaly.Matcher.Selectors
 {
@@ -23,10 +23,10 @@ namespace Qulaly.Matcher.Selectors
         }
     }
 
-    public class WildcardTypeSelector : Selector
+    public class UniversalTypeSelector : Selector
     {
 
-        public WildcardTypeSelector()
+        public UniversalTypeSelector()
         {
         }
 

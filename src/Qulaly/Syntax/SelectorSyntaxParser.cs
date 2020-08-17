@@ -86,7 +86,7 @@ namespace Qulaly.Syntax
             else
             {
                 // *
-                return new WildcardTypeSelector();
+                return new UniversalTypeSelector();
             }
         }
 
