@@ -192,6 +192,14 @@ namespace Qulaly.Tests
         }
 
         [Fact]
+        public void UniversalTypeSelector()
+        {
+            var selector = new SelectorSyntaxParser().Parse("*");
+            selector.Should().BeOfType<ComplexSelectorList>();
+            selector.ToSelectorString().Should().Be(new ComplexSelectorList(new ComplexSelector(new UniversalTypeSelector())).ToSelectorString());
+        }
+
+        [Fact]
         public void DescendantCombinator()
         {
             var selector = new SelectorSyntaxParser().Parse("ClassDeclaration MethodDeclaration");

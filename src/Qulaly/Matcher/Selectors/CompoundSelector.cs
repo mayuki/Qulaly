@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace Qulaly.Matcher.Selectors
@@ -11,6 +11,7 @@ namespace Qulaly.Matcher.Selectors
             {
                 if (
                     (selector is TypeSelector) ||
+                    (selector is UniversalTypeSelector) ||
                     (selector is PropertySelector) ||
                     (selector is PseudoElementSelector) ||
                     (selector is PseudoClassSelector)
@@ -20,7 +21,7 @@ namespace Qulaly.Matcher.Selectors
                 }
                 else
                 {
-                    throw new ArgumentException($"An element of SimpleSelectorSequence must be TypeSelector, PropertySelector, PseudoElementSelector, PseudoClassSelector. ({selector.ToString()})");
+                    throw new ArgumentException($"An element of SimpleSelectorSequence must be TypeSelector, UniversalTypeSelector, PropertySelector, PseudoElementSelector, PseudoClassSelector. ({selector.ToString()})");
                 }
             }
         }
