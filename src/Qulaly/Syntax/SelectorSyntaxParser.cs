@@ -80,7 +80,7 @@ namespace Qulaly.Syntax
                 }
                 else
                 {
-                    throw new QulalyParseException($"Invalid SyntaxKind Type: {value}");
+                    throw new QulalyParseException($"Invalid SyntaxKind Type: {name}");
                 }
             }
             else
