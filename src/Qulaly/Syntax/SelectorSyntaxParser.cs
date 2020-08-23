@@ -23,7 +23,7 @@ namespace Qulaly.Syntax
             var root = reader.GetRoot();
             if (root == null || (selector.Length != reader.Index))
             {
-                throw new QulalyParseException($"'{selector}' is a not valid selector. (Unexpected token: '{selector.Substring(reader.Index, 1)}' at {reader.Index+1})");
+                throw new QulalyParseException($"'{selector}' is a not valid selector. (Unexpected token: '{selector.Substring(reader.Index, 1)}' at position {reader.Index+1})");
             }
 
             return root;
@@ -80,7 +80,7 @@ namespace Qulaly.Syntax
                 }
                 else
                 {
-                    throw new QulalyParseException($"Invalid SyntaxKind Type: {name}");
+                    throw new QulalyParseException($"Invalid SyntaxKind Type: {name}", production);
                 }
             }
             else
@@ -99,7 +99,7 @@ namespace Qulaly.Syntax
                 ">" => new ChildCombinator(),
                 "+" => new NextSiblingCombinator(),
                 "~" => new SubsequentSiblingCombinator(),
-                _ => throw new QulalyParseException($"Unknown Combinator: {combinator}"),
+                _ => throw new QulalyParseException($"Unknown Combinator: {combinator}", production),
             };
         }
 
@@ -116,7 +116,7 @@ namespace Qulaly.Syntax
                     "lambda" => new LambdaPseudoClassSelector(),
                     "first-child" => new FirstChildPseudoClassSelector(),
                     "last-child" => new LastChildPseudoClassSelector(),
-                    _ => throw new QulalyParseException($"Unknown Pseudo-class: {pseudoName}"),
+                    _ => throw new QulalyParseException($"Unknown Pseudo-class: {pseudoName}", production),
                 };
             }
             else
@@ -144,7 +144,7 @@ namespace Qulaly.Syntax
                     "^=" => new PropertyPrefixMatchSelector(name, value),
                     "$=" => new PropertySuffixMatchSelector(name, value),
                     "~=" => new PropertyItemContainsMatchSelector(name, value),
-                    _ => throw new QulalyParseException($"Unknown Matcher: {matcher}")
+                    _ => throw new QulalyParseException($"Unknown Matcher: {matcher}", production)
                 };
             }
             else
@@ -162,7 +162,7 @@ namespace Qulaly.Syntax
 
                 if (!int.TryParse(production.Captures[1], out var value))
                 {
-                    throw new QulalyParseException($"Invalid Number: {value}");
+                    throw new QulalyParseException($"Invalid Number: {value}", production);
                 }
 
                 return matcher switch
@@ -172,7 +172,7 @@ namespace Qulaly.Syntax
                     "<=" => new PropertyLessThanEqualMatchSelector(name, value),
                     ">" => new PropertyGreaterThanMatchSelector(name, value),
                     ">=" => new PropertyGreaterThanEqualMatchSelector(name, value),
-                    _ => throw new QulalyParseException($"Unknown Matcher: {matcher}")
+                    _ => throw new QulalyParseException($"Unknown Matcher: {matcher}", production)
                 };
             }
             else

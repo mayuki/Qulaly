@@ -1,4 +1,5 @@
 using System;
+using Qulaly.Syntax;
 
 namespace Qulaly
 {
@@ -6,6 +7,11 @@ namespace Qulaly
     {
         public QulalyParseException(string message)
             : base(message)
+        {
+        }
+
+        public QulalyParseException(string message, Production production)
+            : base($"{message} (at position {production.Position + 1})")
         {
         }
     }
