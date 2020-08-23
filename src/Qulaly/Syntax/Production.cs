@@ -7,13 +7,15 @@ namespace Qulaly.Syntax
     public class Production
     {
         public ProductionKind Kind { get; }
+        public int Position { get; }
 
         public List<string> Captures { get; }
         public List<Production> Children { get; }
 
-        public Production(ProductionKind kind)
+        public Production(ProductionKind kind, int position)
         {
             Kind = kind;
+            Position = position;
             Captures = new List<string>();
             Children = new List<Production>();
         }

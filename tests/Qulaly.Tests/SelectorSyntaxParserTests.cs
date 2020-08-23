@@ -180,7 +180,8 @@ namespace Qulaly.Tests
         [Fact]
         public void TypeSelector_SyntaxKind_Invalid()
         {
-            Assert.Throws<QulalyParseException>(() => new SelectorSyntaxParser().Parse("Unknown"));
+            var ex = Assert.Throws<QulalyParseException>(() => new SelectorSyntaxParser().Parse("MethodDeclaration Unknown"));
+            ex.Message.Should().EndWith("(at position 19)");
         }
 
         [Fact]

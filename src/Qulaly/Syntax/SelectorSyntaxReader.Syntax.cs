@@ -21,7 +21,7 @@ namespace Qulaly.Syntax
 
         public bool Production(ProductionKind kind, Func<bool> next)
         {
-            var node = new Production(kind);
+            var node = new Production(kind, Index);
             var parent = CurrentProduction;
             var parentScope = _productionScope;
 
