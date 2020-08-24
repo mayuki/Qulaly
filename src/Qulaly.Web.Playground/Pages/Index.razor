@@ -1,0 +1,76 @@
+﻿@page "/"
+@using System.Text
+@using Microsoft.CodeAnalysis.CSharp
+@using Qulaly
+
+@code {
+    protected override void OnInitialized()
+    {
+        RenderSyntaxTree = (syntaxTree) => RenderSyntaxNode(syntaxTree.GetRoot());
+        RenderSyntaxNode = (syntaxNode) => @<span title="@GetNodePath(syntaxNode)" class="SyntaxNode @(syntaxNodeMatches.Contains(syntaxNode) ? "SyntaxNode-IsMatched" : "")" data-syntax-node-kind="@syntaxNode.Kind()">@{
+            foreach (var nodeAndToken in syntaxNode.ChildNodesAndTokens())
+            {
+                if (nodeAndToken.IsNode)
+                {
+                    <text>@RenderSyntaxNode(nodeAndToken.AsNode())</text>;
+                }
+                else
+                {
+                    <text>@RenderSyntaxToken(nodeAndToken.AsToken())</text>;
+                }
+            }
+        }</span>;
+        RenderSyntaxToken = (syntaxToken) => @<span _title="@GetTokenPath(syntaxToken)" class="SyntaxToken" data-syntax-token-kind="@syntaxToken.Kind()">@{
+            @foreach (var trivia in syntaxToken.LeadingTrivia) {<span class="Trivia Trivia-Leading Trivia-@trivia.Kind()">@trivia.ToFullString()</span>}<span class="SyntaxTokenText">@syntaxToken.Text</span>@foreach (var trivia in syntaxToken.TrailingTrivia) {<span class="Trivia Trivia-Trailing Trivia-@trivia.Kind()">@trivia.ToFullString()</span>}
+        }</span>;
+
+        ParseSource();
+        ExecuteQuery();
+
+        base.OnInitialized();
+    }
+}
+<div class="app">
+    <div class="header">
+        <h1>Qulaly - Playground</h1>
+    </div>
+    <div class="main-pane-container">
+        <div class="main-pane">
+            <div class="pane-area-source">
+                <h2>📃 Source</h2>
+                <textarea @oninput="UpdateSource">@sourceCode</textarea>
+            </div>
+            <div class="pane-area-query">
+                <h2>🔍 Query</h2>
+                <input type="text" value="@query" @oninput="UpdateQuery" />
+            </div>
+            <div class="pane-area-result">
+                <h2>🧪 Result</h2>
+                <div class="results">
+                    @if (!string.IsNullOrWhiteSpace(output))
+                    {
+                        <pre>@output</pre>
+                    }
+                    else
+                    {
+                        foreach (var node in syntaxNodeMatches)
+                        {
+                            <div class="results-match">
+                                <h3>@node.Kind() [@node.FullSpan.Start .. @node.FullSpan.End]</h3>
+                                <pre><code>@if (syntaxTree != null){ @RenderSyntaxNode(node) }</code></pre>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="main-pane">
+            <div class="pane-area-syntaxTree">
+                <h2>🌳 SyntaxTree</h2>
+                <div class="syntaxTree">
+                    <pre><code>@if (syntaxTree != null){ @RenderSyntaxTree(syntaxTree) }</code></pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
