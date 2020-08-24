@@ -1,0 +1,169 @@
+﻿html {
+    --color-boarder-light: #ccc;
+    --color-highlight-keyword: rgb(0, 0, 255);
+    --color-highlight-string: rgb(163, 21, 21);
+    --color-highlight-type: rgb(43, 145, 175);
+    --color-highlight-comment: rgb(0, 128, 0);
+    --margin-base: 8px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', 'Arial', sans-serif;
+}
+
+pre {
+    font-size: 13.5px;
+    line-height: 1.4;
+    font-family: 'Consolas', monospace;
+    margin: var(--margin-base);
+}
+
+.app {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background: rgb(125 167 194);
+}
+
+    .header h1 {
+        color: #fff;
+        margin: 16px 8px;
+        font-size: 1.25rem;
+    }
+
+.main-pane-container {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    padding: 8px;
+}
+
+.main-pane {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+    .main-pane:nth-child(2) {
+        margin-left: var(--margin-base);
+    }
+
+.pane-area-source,
+.pane-area-query,
+.pane-area-syntaxTree,
+.pane-area-result {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+    .pane-area-source :nth-child(2),
+    .pane-area-query :nth-child(2),
+    .pane-area-syntaxTree :nth-child(2),
+    .pane-area-result :nth-child(2) {
+        flex: 1;
+    }
+
+.pane-area-source {
+    flex: 1;
+}
+
+    .pane-area-source textarea {
+        border: 1px solid var(--color-boarder-light);
+        font-size: 13.5px;
+        line-height: 1.4;
+        font-family: 'Consolas', monospace;
+    }
+
+.pane-area-query {
+    flex: none;
+}
+
+    .pane-area-query input {
+        font-size: 16px;
+        padding: var(--margin-base);
+        border: 1px solid var(--color-boarder-light);
+    }
+
+.pane-area-syntaxTree {
+    flex: 1;
+}
+
+.syntaxTree {
+    border: 1px solid var(--color-boarder-light);
+    overflow: auto;
+}
+
+.pane-area-result {
+    flex: 1;
+}
+
+.results {
+    border: 1px solid var(--color-boarder-light);
+    overflow: auto;
+}
+
+.results-match {
+    margin: var(--margin-base);
+}
+
+    .results-match h3 {
+        margin: 0.5rem 0;
+    }
+
+.SyntaxToken[data-syntax-token-kind$="Keyword"] {
+    color: var(--color-highlight-keyword);
+}
+
+.SyntaxToken[data-syntax-token-kind="StringLiteralToken"] {
+    color: var(--color-highlight-string);
+}
+
+.SyntaxNode.SyntaxNode-IsMatched {
+    background: rgb(255, 240, 240);
+}
+
+.SyntaxNode[data-syntax-node-kind = 'Attribute'] > .SyntaxNode[data-syntax-node-kind = 'IdentifierName'] > .SyntaxToken[data-syntax-token-kind = 'IdentifierToken'],
+.SyntaxNode[data-syntax-node-kind = 'ObjectCreationExpression'] > * > .SyntaxToken[data-syntax-token-kind = 'IdentifierToken'],
+.SyntaxNode[data-syntax-node-kind = 'MethodDeclaration'] > .SyntaxToken[data-syntax-token-kind = 'IdentifierToken'],
+.SyntaxNode[data-syntax-node-kind = 'MethodDeclaration'] > .SyntaxNode[data-syntax-node-kind = 'GenericName'] > .SyntaxToken[data-syntax-token-kind = 'IdentifierToken'],
+.SyntaxNode[data-syntax-node-kind = 'StructDeclaration'] > .SyntaxToken[data-syntax-token-kind = 'IdentifierToken'],
+.SyntaxNode[data-syntax-node-kind = 'ClassDeclaration'] > .SyntaxToken[data-syntax-token-kind = 'IdentifierToken'] {
+    color: var(--color-highlight-type);
+}
+
+.Trivia {
+}
+
+    .Trivia.Trivia-SingleLineCommentTrivia, .Trivia.Trivia-MultiLineCommentTrivia {
+        color: var(--color-highlight-comment);
+    }
+
+/* Blazor Error UI styles */
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
