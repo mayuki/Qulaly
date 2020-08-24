@@ -4,6 +4,8 @@
 [![NuGet version](https://badge.fury.io/nu/Qulaly.svg)](https://www.nuget.org/packages/Qulaly)
 [![Build-Development](https://github.com/mayuki/Qulaly/workflows/Build-Development/badge.svg)](https://github.com/mayuki/Qulaly/actions?query=workflow%3ABuild-Development)
 
+⚡Live Demo: https://mayuki.github.io/Qulaly/
+
 ## Example
 The following code shows how to query the `async` method.
 
